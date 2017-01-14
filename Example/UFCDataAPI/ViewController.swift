@@ -7,12 +7,22 @@
 //
 
 import UIKit
+import UFCDataAPI
 
 class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        UFCEventService.getAllUFCEvents { (result) in
+            switch result {
+            case .success(let events):
+                Logger.log(message: "Events: \(events)")
+            case .failure(let error):
+                Logger.log(message: "Error: \(error)")
+            }
+        }
     }
 
     override func didReceiveMemoryWarning() {

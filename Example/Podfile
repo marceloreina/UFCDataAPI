@@ -2,7 +2,7 @@ use_frameworks!
 
 target 'UFCDataAPI_Example' do
   pod 'UFCDataAPI', :path => '../'
-
+  
   target 'UFCDataAPI_Tests' do
     inherit! :search_paths
 

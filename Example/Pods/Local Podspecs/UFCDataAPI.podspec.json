@@ -18,5 +18,16 @@
   "platforms": {
     "ios": "8.0"
   },
-  "source_files": "UFCDataAPI/Classes/**/*"
+  "source_files": "UFCDataAPI/Classes/**/*",
+  "dependencies": {
+    "Alamofire": [
+
+    ],
+    "Moya": [
+      "8.0.0"
+    ],
+    "ObjectMapper": [
+      "~> 2.2"
+    ]
+  }
 }
