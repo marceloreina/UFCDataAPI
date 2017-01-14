@@ -1,0 +1,22 @@
+{
+  "name": "UFCDataAPI",
+  "version": "0.1.0",
+  "summary": "A short description of UFCDataAPI.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/<GITHUB_USERNAME>/UFCDataAPI",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "Marcelo Reina": "marceloreina@gmail.com"
+  },
+  "source": {
+    "git": "https://github.com/<GITHUB_USERNAME>/UFCDataAPI.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "source_files": "UFCDataAPI/Classes/**/*"
+}
