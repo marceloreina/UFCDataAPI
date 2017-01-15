@@ -9,14 +9,7 @@
 import Foundation
 import Moya
 
-public enum UFCAPIError: Swift.Error {
-    case unknownError
-}
 
-public enum UFCAPIResult<T> {
-    case success(object: T)
-    case failure(error: UFCAPIError)
-}
 
 public class UFCEventService {
     
@@ -29,16 +22,16 @@ public class UFCEventService {
         provider.request(.events) { result in
             switch result {
             case let .success(moyaResponse):
-                //                let data = moyaResponse.data // Data, your JSON response is probably in here!
-                let statusCode = moyaResponse.statusCode // Int - 200, 401, 500, etc
+
+                let statusCode = moyaResponse.statusCode
                 guard statusCode == 200 else {
-                    completion(.failure(error: .unknownError))
+                    completion(.failure(error: .httpError))
                     return
                 }
                 
                 let jsonData = try? moyaResponse.mapJSON()
                 guard jsonData != nil else {
-                    completion(.failure(error: .unknownError))
+                    completion(.failure(error: .invalidJSONObject))
                     return
                 }
                 
@@ -50,16 +43,15 @@ public class UFCEventService {
                 
                 let events = UFCEvent.makeUFCEvents(from: array!)
                 guard events != nil else {
-                    completion(.failure(error: .unknownError))
+                    completion(.failure(error: .invalidJSONMapping))
                     return
                 }
 
-                //TODO: Map and return
                 completion(.success(object: events!))
                 
             // do something in your app
-            case let .failure(error):
-                completion(.failure(error: .unknownError))
+            case let .failure(_):
+                completion(.failure(error: .requestFailureError))
             }
         }
 

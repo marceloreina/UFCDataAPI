@@ -9,6 +9,20 @@
 import Foundation
 import Moya
 
+public enum UFCAPIError: Swift.Error {
+    case unknownError
+    case httpError
+    case requestFailureError
+    case invalidJSONObject
+    case invalidJSONMapping
+}
+
+public enum UFCAPIResult<T> {
+    case success(object: T)
+    case failure(error: UFCAPIError)
+}
+
+
 enum UFCAPI {
     case events
 }
@@ -56,6 +70,6 @@ extension UFCAPI: TargetType {
     }
     
     var parameterEncoding: ParameterEncoding {
-        return URLEncoding()/*URLEncoding.default*/
+        return URLEncoding() //All requests are GET
     }
 }
