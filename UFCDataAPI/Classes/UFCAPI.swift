@@ -25,6 +25,7 @@ public enum UFCAPIResult<T> {
 
 enum UFCAPI {
     case events
+    case news
 }
 
 
@@ -41,19 +42,21 @@ extension UFCAPI: TargetType {
         switch self {
         case .events:
             return "/events"
+        case .news:
+            return "/news"
         }
     }
     
     var method: Moya.Method {
         switch self {
-        case .events:
+        case .events, .news:
             return .get
         }
     }
     
     var parameters: [String: Any]? {
         switch self {
-        case .events:
+        case .events, .news:
             return nil
         }
     }
@@ -64,7 +67,7 @@ extension UFCAPI: TargetType {
 
     var task:Task {
         switch self {
-        case .events:
+        case .events, .news:
             return .request
         }
     }

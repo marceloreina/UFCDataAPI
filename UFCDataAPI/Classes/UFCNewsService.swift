@@ -1,28 +1,22 @@
 //
-//  EventsService.swift
-//  UFCDataAPI
+//  UFCNewsService.swift
+//  Pods
 //
-//  Created by Marcelo Reina on 11/01/17.
-//  Copyright © 2017 Marcelo Reina. All rights reserved.
+//  Created by Marcelo Reina on 15/01/17.
+//
 //
 
 import Foundation
 import Moya
 
 
-
-public class UFCEventService {
-    
-    
-    /// Asynch request to get all UFC events.
-    ///
-    /// - Parameter completion: completion handler that uses `UFCAPIResult` in order to bring `[UFCEvent]` as success or a `UFCAPIError` as a failure.
-    public static func getAllUFCEvents(completion: @escaping (UFCAPIResult<[UFCEvent]>) -> Void) {
+public class UFCNewsService {
+    public static func getAllUFCEvents(completion: @escaping (UFCAPIResult<[UFCNews]>) -> Void) {
         let provider = MoyaProvider<UFCAPI>()
-        provider.request(.events) { result in
+        provider.request(.news) { result in
             switch result {
             case let .success(moyaResponse):
-
+                
                 let statusCode = moyaResponse.statusCode
                 guard statusCode == 200 else {
                     completion(.failure(error: .httpError))
@@ -41,19 +35,17 @@ public class UFCEventService {
                     return
                 }
                 
-                let events = UFCEvent.makeUFCEvents(from: array!)
+                let events = UFCNews.makeUFCNews(from: array!)
                 guard events != nil else {
                     completion(.failure(error: .invalidJSONMapping))
                     return
                 }
-
+                
                 completion(.success(object: events!))
                 
             case let .failure(_):
                 completion(.failure(error: .requestFailureError))
             }
         }
-
     }
-    
 }

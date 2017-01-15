@@ -11,13 +11,13 @@ import ObjectMapper
 
 public struct UFCEvent {
     var id: Int64?
-    var eventDate: String? //TODO create date object
+    var eventDate: Date?
     var secondaryFeatureImage: String?
     var ticketImage: String?
     var eventTimeZoneText: String?
     var shortDescription: String?
-    var eventDategmt: String? //TODO create date object
-    var end_event_dategmt: String? //TODO create date object
+    var eventDategmt: Date?
+    var endEventDategmt: Date?
     var ticketURL: String?
     var ticketSellerName: String?
     var baseTitle: String?
@@ -34,9 +34,9 @@ public struct UFCEvent {
     var cornerAudioAvailable: Bool?
     var cornerAudioBlueStreamURL: String?
     var cornerAudioRedStreamURL: String?
-    var lastModified: String? //TODO create date object
+    var lastModified: Date?
     var urlName: String?
-    var created: String? //TODO create date object
+    var created: Date?
     var trailerURL: String?
     var arena: String?
     var location: String?
@@ -52,13 +52,10 @@ extension UFCEvent: Mappable {
     
     mutating public func mapping(map: Map) {
         id <- map["id"]
-        eventDate <- map["event_date"]
         secondaryFeatureImage <- map["secondary_feature_image"]
         ticketImage <- map["ticket_image"]
         eventTimeZoneText <- map["event_time_zone_text"]
         shortDescription <- map["short_description"]
-        eventDategmt <- map["event_dategmt"]
-        end_event_dategmt <- map["end_event_dategmt"]
         ticketURL <- map["ticketurl"]
         ticketSellerName <- map["ticket_seller_name"]
         baseTitle <- map["base_title"]
@@ -75,9 +72,7 @@ extension UFCEvent: Mappable {
         cornerAudioAvailable <- map["corner_audio_available"]
         cornerAudioBlueStreamURL <- map["corner_audio_blue_stream_url"]
         cornerAudioRedStreamURL <- map["corner_audio_red_stream_url"]
-        lastModified <- map["last_modified"]
         urlName <- map["url_name"]
-        created <- map["created"]
         trailerURL <- map["trailer_url"]
         arena <- map["arena"]
         location <- map["location"]
@@ -86,6 +81,22 @@ extension UFCEvent: Mappable {
         mainEventFighter2Id <- map["main_event_fighter2_id"]
         latitude <- map["latitude"]
         longitude <- map["longitude"]
+        
+        // convert string from json to Date object (closure)
+        let transform = TransformOf<Date, String>(fromJSON: { (value: String?) -> Date? in
+            return Date.makeDate(from: value)
+        }, toJSON: { (value: Date?) -> String? in
+            if let value = value {
+                return Date.makeString(from: value, dateStyle: .short)
+            }
+            return nil
+        })
+        // custom map using transform closure
+        eventDate <- (map["event_date"], transform)
+        eventDategmt <- (map["event_dategmt"], transform)
+        endEventDategmt <- (map["end_event_dategmt"], transform)
+        lastModified <- (map["last_modified"], transform)
+        created <- (map["created"], transform)
     }
 }
 

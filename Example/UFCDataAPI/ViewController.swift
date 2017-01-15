@@ -15,14 +15,22 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        UFCEventService.getAllUFCEvents { (result) in
+        UFCNewsService.getAllUFCEvents { (result) in
+            switch result {
+            case .success(let newsArray):
+                print("News: \(newsArray)")
+            case .failure(let error):
+                print("News FAILED: \(error)")
+            }
+        }
+        /*UFCEventService.getAllUFCEvents { (result) in
             switch result {
             case .success(let events):
                 Logger.log(message: "Events: \(events)")
             case .failure(let error):
                 Logger.log(message: "Error: \(error)")
             }
-        }
+        }*/
     }
 
     override func didReceiveMemoryWarning() {
