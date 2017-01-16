@@ -11,7 +11,7 @@ import Moya
 
 
 public class UFCNewsService {
-    public static func getAllUFCEvents(completion: @escaping (UFCAPIResult<[UFCNews]>) -> Void) {
+    public static func getUFCNews(completion: @escaping (UFCAPIResult<[UFCNews]>) -> Void) {
         let provider = MoyaProvider<UFCAPI>()
         provider.request(.news) { result in
             switch result {

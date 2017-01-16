@@ -9,13 +9,13 @@
 import UIKit
 import UFCDataAPI
 
-class ViewController: UIViewController {
+class EventsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        UFCNewsService.getAllUFCEvents { (result) in
+        UFCNewsService.getUFCNews { (result) in
             switch result {
             case .success(let newsArray):
                 print("News: \(newsArray)")
